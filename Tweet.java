@@ -22,7 +22,7 @@ public class Tweet {
         setText(text);
         setHashtag(hashtag);
         setGold_emotion(gold);
-        setPredicted_emotion("happy");
+        setPredicted_emotion("sad");
     }
 
     public Tweet(String gold, String hashtag, String date, long id, String username, String lang, String name, String text){
@@ -33,8 +33,24 @@ public class Tweet {
         setName(name);
     }
 
+    public boolean taggedCorrectly(){
+        return getGold_emotion().equals(getPredicted_emotion());
+    }
+
+
+    public boolean[] featureExtraction(){
+        boolean[] features = new boolean[5];
+        if(getText().contains("#happy") || getText().contains("#happiness") ||
+                getText().contains("#lucky") || getText().contains("#joy")) features[0] = true;
+        if(getText().contains("#sad") || getText().contains("#sadness") ||
+                getText().contains("#grief") || getText().contains("#joy")) features[0] = true;
+        if(getText().contains("#happy") || getText().contains("#happiness") ||
+                getText().contains("#lucky") || getText().contains("#joy")) features[0] = true;
+
+        return features;
+    }
     public String toString(){
-        return "";
+        return getText() + " " + taggedCorrectly();
     }
 
     public String getUsername() {

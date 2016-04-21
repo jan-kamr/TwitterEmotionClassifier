@@ -11,8 +11,9 @@ public class Main {
 
         try
         {
-            String directory_path = "";
+            String directory_path = "/home/elnaz/Desktop/Courses/Computational Linguistics Team Lab NLP/Twitter/sample";
             Corpus corpus = new Corpus(directory_path);
+            System.out.println(corpus.evaluate());
         }
         catch(IOException e){
             e.printStackTrace();
