@@ -1,0 +1,14 @@
+sad  	TP: 105918	FP: 614640	FN: 0	TN: 0
+happy  	TP: 0	FP: 0	FN: 442649	TN: 277909
+anger  	TP: 0	FP: 0	FN: 53419	TN: 667139
+fear  	TP: 0	FP: 0	FN: 88691	TN: 631867
+disgust  	TP: 0	FP: 0	FN: 1998	TN: 718560
+surprise  	TP: 0	FP: 0	FN: 27883	TN: 692675
+sad  	P: 0.14699441266351912	R: 1.0	F1: 0.2563123430081454
+happy  	P: NaN	R: 0.0	F1: NaN
+anger  	P: NaN	R: 0.0	F1: NaN
+fear  	P: NaN	R: 0.0	F1: NaN
+disgust  	P: NaN	R: 0.0	F1: NaN
+surprise  	P: NaN	R: 0.0	F1: NaN
+F1 Micro Averaging: NaN
+F1 Macro Averaging: NaN
