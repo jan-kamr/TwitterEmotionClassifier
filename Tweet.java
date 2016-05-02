@@ -1,4 +1,7 @@
 import java.lang.String;
+import java.util.HashMap;
+import java.util.Set;
+
 /**
  * Created by elnaz on 18.04.16.
  */
@@ -13,16 +16,21 @@ public class Tweet {
     private String gold_emotion;
     private String predicted_emotion;
     private String hashtag;
+    private Set<String> tokens;
 
     public Tweet(){
     }
 
     public Tweet(String gold, String hashtag, long id, String text){
-        setTweet_id(id);
+
+        TextProcessing tp = new TextProcessing();
+        setTokens(tp.remove_stopWords(tp.tokenize(tp.normalize(text))));
         setText(text);
+
+        setTweet_id(id);
         setHashtag(hashtag);
         setGold_emotion(gold);
-        setPredicted_emotion("sad");
+        setPredicted_emotion("happy");
     }
 
     public Tweet(String gold, String hashtag, String date, long id, String username, String lang, String name, String text){
@@ -37,16 +45,22 @@ public class Tweet {
         return getGold_emotion().equals(getPredicted_emotion());
     }
 
+    public Result evaluator(String emotion){
+        int TP = 0, FP = 0, FN = 0, TN=0;
+        if (this.taggedCorrectly()) TP++;
+        else {
+            if (this.getGold_emotion().equals(emotion)) FN++;
+            else if (this.getPredicted_emotion().equals(emotion)) FP++;
+            else TN++;
+        }
+        return new Result(TP, FP, FN, TN);
+    }
 
-    public boolean[] featureExtraction(){
-        boolean[] features = new boolean[5];
-        if(getText().contains("#happy") || getText().contains("#happiness") ||
-                getText().contains("#lucky") || getText().contains("#joy")) features[0] = true;
-        if(getText().contains("#sad") || getText().contains("#sadness") ||
-                getText().contains("#grief") || getText().contains("#joy")) features[0] = true;
-        if(getText().contains("#happy") || getText().contains("#happiness") ||
-                getText().contains("#lucky") || getText().contains("#joy")) features[0] = true;
-
+    public HashMap<String, Integer> featureExtraction(){
+        HashMap<String, Integer> features = new HashMap<>();
+        for (String token:tokens) {
+            features.put(token,features.get(token)+1);
+        }
         return features;
     }
     public String toString(){
@@ -123,5 +137,13 @@ public class Tweet {
 
     public void setPredicted_emotion(String predicted_emotion) {
         this.predicted_emotion = predicted_emotion;
+    }
+
+    public Set<String> getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(Set<String> tokens) {
+        this.tokens = tokens;
     }
 }

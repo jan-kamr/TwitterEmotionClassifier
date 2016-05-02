@@ -13,7 +13,8 @@ public class Main {
         {
             String directory_path = "/home/elnaz/Desktop/Courses/Computational Linguistics Team Lab NLP/Twitter/sample";
             Corpus corpus = new Corpus(directory_path);
-            System.out.println(corpus.evaluate());
+            //corpus.classify();
+            corpus.evaluate();
         }
         catch(IOException e){
             e.printStackTrace();
