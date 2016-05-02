@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Set;
  */
 public class TextProcessing {
 
-    public  String[] stopWordsArray = {"the","a","an","of","I"};
+    public  String[] stopWordsArray = {"the","a","an","of","I", "and", "or"};
 
     public TextProcessing() {
     }
@@ -48,9 +49,10 @@ public class TextProcessing {
         return this.handlePuncuation(this.toLowerCase(text));
     }
 
-    public String[] tokenize(String text)
+    public List<String> tokenize(String text)
     {
-        return text.split("( )+"); //Even if more spaces are inserted between words
+        String[] t = text.split("( )+"); //Even if more spaces are inserted between words
+        return Arrays.asList(t);
     }
 
     public Set<String> remove_stopWords(String[] tokens){

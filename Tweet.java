@@ -1,5 +1,7 @@
 import java.lang.String;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -16,7 +18,7 @@ public class Tweet {
     private String gold_emotion;
     private String predicted_emotion;
     private String hashtag;
-    private Set<String> tokens;
+    private List<String> tokens;
 
     public Tweet(){
     }
@@ -24,13 +26,13 @@ public class Tweet {
     public Tweet(String gold, String hashtag, long id, String text){
 
         TextProcessing tp = new TextProcessing();
-        setTokens(tp.remove_stopWords(tp.tokenize(tp.normalize(text))));
+        //setTokens(tp.tokenize(tp.normalize(text)));
         setText(text);
 
         setTweet_id(id);
         setHashtag(hashtag);
         setGold_emotion(gold);
-        setPredicted_emotion("happy");
+        setPredicted_emotion("sad");
     }
 
     public Tweet(String gold, String hashtag, String date, long id, String username, String lang, String name, String text){
@@ -47,22 +49,33 @@ public class Tweet {
 
     public Result evaluator(String emotion){
         int TP = 0, FP = 0, FN = 0, TN=0;
-        if (this.taggedCorrectly()) TP++;
-        else {
-            if (this.getGold_emotion().equals(emotion)) FN++;
-            else if (this.getPredicted_emotion().equals(emotion)) FP++;
-            else TN++;
-        }
-        return new Result(TP, FP, FN, TN);
+        if(this.taggedCorrectly() && this.getGold_emotion().equals(emotion)) TP++;
+        else if(!this.taggedCorrectly() && this.getGold_emotion().equals(emotion)) FN++;
+        else if(!this.taggedCorrectly() && this.getPredicted_emotion().equals(emotion)) FP++;
+        else TN++;
+        Result r = new Result(TP, FP, FN, TN);
+        return r;
     }
 
-    public HashMap<String, Integer> featureExtraction(){
+    public List<String> featureExtraction(){
+        List<String> features = new LinkedList<>();
+        for(String token: tokens){
+            if(!token.equals(getHashtag()))
+                features.add(token);
+        }
+        features.add(getUsername());
+        features.add(getDate());
+        features.add(getLanguage());
+        features.add(getName());
+        return features;
+    }
+    /*public HashMap<String, Integer> featureExtraction(){
         HashMap<String, Integer> features = new HashMap<>();
         for (String token:tokens) {
             features.put(token,features.get(token)+1);
         }
         return features;
-    }
+    }*/
     public String toString(){
         return getText() + " " + taggedCorrectly();
     }
@@ -139,11 +152,11 @@ public class Tweet {
         this.predicted_emotion = predicted_emotion;
     }
 
-    public Set<String> getTokens() {
+    public List<String> getTokens() {
         return tokens;
     }
 
-    public void setTokens(Set<String> tokens) {
+    public void setTokens(List<String> tokens) {
         this.tokens = tokens;
     }
 }

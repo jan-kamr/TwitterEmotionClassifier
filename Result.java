@@ -2,6 +2,7 @@
  * Created by elnaz on 30.04.16.
  */
 public class Result{
+
     private int TP, FP, FN, TN;
 
     public Result(){}
@@ -13,9 +14,9 @@ public class Result{
         this.TN = TN;
     }
 
-    public double precision(){return (this.getTP()/(this.getTP()+this.getFP()));}
+    public double precision(){return ((double)this.getTP()/(this.getTP()+this.getFP()));}
 
-    public double recall(){return (this.getTP()/(this.getTP()+this.getFN()));}
+    public double recall(){return ((double)this.getTP()/(this.getTP()+this.getFN()));}
 
     public int getTP() {
         return TP;

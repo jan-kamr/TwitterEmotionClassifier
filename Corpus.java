@@ -50,6 +50,7 @@ public class Corpus {
         Result[] results = new Result[6];
         for (int i=0; i<6; i++){
             results[i] = evaluator(emotions[i]);
+            //System.out.println(results[i].getTP() + " " + results[i].getFP() + " " + results[i].getFN() + " " + results[i].getTN());
         }
 
         double[] precisions = new double[6];
@@ -58,13 +59,14 @@ public class Corpus {
         double sum_precision = 0, sum_recall = 0, sum_f1 = 0;
         int i = 0;
         for (Result res: results){
+
+            double d = (double) res.getTP()/(res.getTP()+res.getFP());
             precisions[i] = res.precision(); recalls[i] = res.recall();
             fscores[i] = 2 * precisions[i] * recalls[i] / (precisions[i] + recalls[i]);
             System.out.println(emotions[i] + "  \tP: " + precisions[i] + "\tR: " + recalls[i] + "\tF1: " + fscores[i]);
             sum_precision += precisions[i]; sum_recall += recalls[i];
             sum_f1 += fscores[i];
             i++;
-
         }
         //Micro averaging
         double f_score = sum_f1 / 6;
@@ -85,6 +87,7 @@ public class Corpus {
             TP += r.getTP(); TN += r.getTN();
             FP += r.getFP(); FN += r.getFN();
         }
+        System.out.println(emotion + "  \tTP: "+ TP + "\tFP: " + FP + "\tFN: " + FN + "\tTN: " + TN);
         return new Result(TP, FP, FN, TN);
     }
 
