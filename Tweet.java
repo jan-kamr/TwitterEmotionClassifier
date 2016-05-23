@@ -26,13 +26,13 @@ public class Tweet {
     public Tweet(String gold, String hashtag, long id, String text){
 
         TextProcessing tp = new TextProcessing();
-        //setTokens(tp.tokenize(tp.normalize(text)));
+        setTokens(tp.tokenize(tp.normalize(text)));
         setText(text);
 
         setTweet_id(id);
         setHashtag(hashtag);
         setGold_emotion(gold);
-        setPredicted_emotion("sad");
+        //setPredicted_emotion("sad");
     }
 
     public Tweet(String gold, String hashtag, String date, long id, String username, String lang, String name, String text){
@@ -60,22 +60,16 @@ public class Tweet {
     public List<String> featureExtraction(){
         List<String> features = new LinkedList<>();
         for(String token: tokens){
-            if(!token.equals(getHashtag()))
-                features.add(token);
+            if(!token.equals(getHashtag())) //all hashtags
+                features.add("W="+token);
         }
-        features.add(getUsername());
-        features.add(getDate());
-        features.add(getLanguage());
-        features.add(getName());
+        features.add("USERNAME="+getUsername());
+        //features.add("DATE="+getDate());
+        //features.add("LANG="+getLanguage());
+        //features.add("NAME="+getName());
         return features;
     }
-    /*public HashMap<String, Integer> featureExtraction(){
-        HashMap<String, Integer> features = new HashMap<>();
-        for (String token:tokens) {
-            features.put(token,features.get(token)+1);
-        }
-        return features;
-    }*/
+
     public String toString(){
         return getText() + " " + taggedCorrectly();
     }

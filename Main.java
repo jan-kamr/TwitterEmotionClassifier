@@ -11,10 +11,10 @@ public class Main {
 
         try
         {
-            String directory_path = "/home/elnaz/Desktop/Courses/Computational Linguistics Team Lab NLP/Twitter/sample";
+            String directory_path = "/home/elnaz/Desktop/Courses/Computational Linguistics Team Lab NLP/Twitter";
             Corpus corpus = new Corpus(directory_path);
-            //corpus.classify();
-            corpus.evaluate();
+            //Clissifier.classify(corpus);
+            corpus.classify();
         }
         catch(IOException e){
             e.printStackTrace();
