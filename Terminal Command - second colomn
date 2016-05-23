@@ -1,0 +1,25 @@
+cut -f 2 *.csv | sort | uniq 
+#afraid
+#anger
+#bitter
+#disguise
+#disgust
+#fear
+#glad
+#grief
+#happiness
+#happy
+#hate
+#hatred
+#horror
+#joy
+#lucky
+#misery
+#panic
+#rage
+#sad
+#sadness
+#scare
+#sorrow
+#surprise
+#worry
