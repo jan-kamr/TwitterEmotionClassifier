@@ -23,3 +23,8 @@ cut -f 2 *.csv | sort | uniq
 #sorrow
 #surprise
 #worry
+
+sed -i 's/#afraid//Ig; s/#anger//Ig; s/#bitter//Ig; s/#disguise//Ig; s/#disgust//Ig; s/#fear//Ig; s/#glad//Ig; s/#grief//Ig; s/#happiness//Ig; s/#happy//Ig; s/#hate//Ig; s/#hatred//Ig; s/#horror//Ig; s/#joy//Ig; s/#lucky//Ig; s/#misery//Ig; s/#panic//Ig; s/#rage//Ig; s/#sadness//Ig; s/#scare//Ig; s/#sorrow//Ig; s/#surprise//Ig; s/#worry//Ig' *.csv
+sed -i 's/#sad//Ig;' *.csv
+
+/mount/projekte7/tcl/klingern/teaching/teamlab-ss2016/emotion
