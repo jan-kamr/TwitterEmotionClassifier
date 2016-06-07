@@ -29,6 +29,7 @@ public class Perceptron {
     public void add_weight(Tweet t){
         List<String> features = t.featureExtraction();
         for (String s: features) {
+            //System.out.println(s);
             if(feature_weights.get(s)!=null) feature_weights.put(s, feature_weights.get(s)+1);
             else feature_weights.put(s, 0.0);
         }

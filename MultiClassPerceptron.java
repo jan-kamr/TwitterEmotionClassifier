@@ -16,8 +16,11 @@ public class MultiClassPerceptron {
     public int getBestIndex(Tweet t){
         double max = -Double.MAX_VALUE;
         int index = -1;
+
         for(int i  = 0 ; i < Corpus.no_of_emotions(); i++){
+            //System.out.println(t.getGold_emotion() + " " + t.getPredicted_emotion() + " " + (i+1) + " " + max + " " + perceptrons[i].sum_weights());
             if(Double.compare(perceptrons[i].sum_weights() , max)>0) {
+              //  System.out.println("HERE");
                 max = perceptrons[i].sum_weights();
                 index  = i;
             }

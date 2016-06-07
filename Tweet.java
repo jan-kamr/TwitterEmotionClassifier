@@ -17,26 +17,24 @@ public class Tweet {
     private String name;
     private String gold_emotion;
     private String predicted_emotion;
-    private String hashtag;
     private List<String> tokens;
 
     public Tweet(){
     }
 
-    public Tweet(String gold, String hashtag, long id, String text){
+    public Tweet(String gold, long id, String text){
 
         TextProcessing tp = new TextProcessing();
         setTokens(tp.tokenize(tp.normalize(text)));
         setText(text);
 
         setTweet_id(id);
-        setHashtag(hashtag);
         setGold_emotion(gold);
         //setPredicted_emotion("sad");
     }
 
-    public Tweet(String gold, String hashtag, String date, long id, String username, String lang, String name, String text){
-        this(gold, hashtag, id, text);
+    public Tweet(String gold, String date, long id, String username, String lang, String name, String text){
+        this(gold, id, text);
         setDate(date);
         setUsername(username);
         setLanguage(lang);
@@ -60,8 +58,7 @@ public class Tweet {
     public List<String> featureExtraction(){
         List<String> features = new LinkedList<>();
         for(String token: tokens){
-            if(!token.equals(getHashtag())) //all hashtags
-                features.add("W="+token);
+            features.add("W="+token);
         }
         features.add("USERNAME="+getUsername());
         //features.add("DATE="+getDate());
@@ -96,14 +93,6 @@ public class Tweet {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getHashtag() {
-        return hashtag;
-    }
-
-    public void setHashtag(String hashtag) {
-        this.hashtag = hashtag;
     }
 
     public String getText() {

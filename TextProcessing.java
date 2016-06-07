@@ -25,7 +25,7 @@ public class TextProcessing {
 	/* The metacharacters supported by regex are: <([{\^-=$!|]})?*+.> */
     {
 
-        text = text.replace("n't", " not");			//changes n't to not
+        //text = text.replace("n't", " not");			//changes n't to not
         text = text.replace("'ll", " will");		//changes 'll to will
         text = text.replace("'ve", " have");		//changes 've to have
         text = text.replace("s' ", "s "); 			//plural possessive

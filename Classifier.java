@@ -23,15 +23,29 @@ public class Classifier {
         for (int i = 0 ; i < max_iter; i++){
             System.out.println("-----------------------------------ITERATION NO#" + (i+1) + "------------------------------------------");
             for (Tweet t:corpus.getTweets()) {
+                System.out.println(t.getGold_emotion() + " " + t.getPredicted_emotion());
                 String predictedLabel = mcp.getBestLabel(t);
+                //                                                                                                                                                                                                                          System.out.println(t.getGold_emotion() + " " + predictedLabel);
                 t.setPredicted_emotion(predictedLabel);
                 String goldLabel = t.getGold_emotion();
+                //System.out.println(predictedLabel + " " + goldLabel);
                 if(!predictedLabel.equals(t.getGold_emotion())){
                     mcp.getPerceptronForLabel(predictedLabel).subtract_weight(t);
                     mcp.getPerceptronForLabel(goldLabel).add_weight(t);
                 }
             }
-            corpus.evaluate();
+            //corpus.evaluate();
+            break;
         }
+    }
+
+    public void classify(Corpus testcorpus){
+        System.out.println("-----------------------------------TEST DATA------------------------------------------");
+        for (Tweet t:testcorpus.getTweets()) {
+            String predictedLabel = mcp.getBestLabel(t);
+            t.setPredicted_emotion(predictedLabel);
+            //System.out.println(predictedLabel + " " + t.getGold_emotion());
+        }
+        testcorpus.evaluate();
     }
 }

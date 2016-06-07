@@ -33,11 +33,13 @@ public class Corpus {
             size += file.length();
             for(int i=0; i<content.size(); i++) {
                 String[] s = content.get(i).split("\t");
-
-                //Tweet(String gold, String hashtag, String date, long id, String username, String lang, String name, String text)
-                Tweet t = new Tweet(s[0], s[1], s[2], new Long(s[3]), s[5], s[6], s[7], s[8]);
-
-                tweets.add(t);
+                //public Tweet(String gold, String date, long id, String username, String lang, String name, String text){
+                //System.out.println(s.length);
+                Tweet t = null;
+                if(s.length>8) {
+                    t = new Tweet(s[0], s[2], new Long(s[3]), s[5], s[6], s[7], s[8]);
+                    tweets.add(t);
+                }
             }
         }
     }
@@ -93,10 +95,6 @@ public class Corpus {
         }
         System.out.println(emotion + "  \tTP: "+ TP + "\tFP: " + FP + "\tFN: " + FN + "\tTN: " + TN);
         return new Result(TP, FP, FN, TN);
-    }
-
-    public void classify(){
-        Classifier classifier = new Classifier(this);
     }
 
     public List<Tweet> getTweets() {
