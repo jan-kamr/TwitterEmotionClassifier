@@ -1,27 +1,24 @@
-import java.util.List;
-
 /**
  * Created by elnaz on 09.05.16.
  */
 public class MultiClassPerceptron {
 
-    Perceptron[] perceptrons = new Perceptron[Corpus.no_of_emotions()];
+    Perceptron[] perceptrons;
 
     public MultiClassPerceptron(){
+        perceptrons = new Perceptron[Corpus.no_of_emotions()];
         for(int i  = 0 ; i < Corpus.no_of_emotions(); i++){
             perceptrons[i] = new Perceptron();
         }
     }
 
     public int getBestIndex(Tweet t){
-        double max = -Double.MAX_VALUE;
+        double max = -99999999999999999999.0;
         int index = -1;
-
         for(int i  = 0 ; i < Corpus.no_of_emotions(); i++){
-            //System.out.println(t.getGold_emotion() + " " + t.getPredicted_emotion() + " " + (i+1) + " " + max + " " + perceptrons[i].sum_weights());
-            if(Double.compare(perceptrons[i].sum_weights() , max)>0) {
-              //  System.out.println("HERE");
-                max = perceptrons[i].sum_weights();
+            double sum = perceptrons[i].sum_weights(t);
+            if(sum>max) {//Double.compare(sum , max)>0
+                max = sum;
                 index  = i;
             }
         }

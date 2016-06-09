@@ -1,7 +1,4 @@
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Linear classifier - binary Perceptron
@@ -16,35 +13,34 @@ public class Perceptron {
         feature_weights = new HashMap<>();
     }
 
-    public double sum_weights()
+    public double sum_weights(Tweet t)
     {
         double sum = 0.0;
-        for (Map.Entry<String, Double> entry : feature_weights.entrySet()) {
-            Double value = entry.getValue();
-            sum += (double) value;
+        if (t.getTokens()!=null) {
+            for (String s : t.getTokens()) {
+                if (feature_weights.get(s) != null) sum += (double) feature_weights.get(s);
+            }
         }
         return sum;
     }
 
     public void add_weight(Tweet t){
-        List<String> features = t.featureExtraction();
-        for (String s: features) {
+        for (String s: t.getTokens()) {
             //System.out.println(s);
-            if(feature_weights.get(s)!=null) feature_weights.put(s, feature_weights.get(s)+1);
-            else feature_weights.put(s, 0.0);
+            if(feature_weights.get(s)!=null) feature_weights.put(s, (double)feature_weights.get(s)+1.0);
+            else feature_weights.put(s, (double)0.0);
         }
     }
 
     public void subtract_weight(Tweet t){
-        List<String> features = t.featureExtraction();
-        for (String s: features) {
-            if(feature_weights.get(s)!=null) feature_weights.put(s, feature_weights.get(s)-1);
-            else feature_weights.put(s, 0.0);
+        for (String s: t.getTokens()) {
+            if(feature_weights.get(s)!=null) feature_weights.put(s, (double)feature_weights.get(s)-1.0);
+            else feature_weights.put(s, (double)0.0);
         }
     }
 
-    public boolean classification_decision()
+    public boolean classification_decision(Tweet t)
     {
-        return sum_weights()>threshold;
+        return sum_weights(t)>threshold;
     }
 }

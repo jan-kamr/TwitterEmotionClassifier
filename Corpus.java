@@ -1,10 +1,8 @@
 import java.io.File;
 import java.io.IOException;
-import java.nio.DoubleBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 /**
@@ -12,7 +10,8 @@ import java.util.List;
  */
 public class Corpus {
 
-    public static String[] emotions = {"happy", "sad","anger","fear","disgust","surprise"};
+    public static String[] emotions = {"happy", "sad","surprise","anger","fear","disgust"};
+    public static int[] emotions_no = {0,0,0,0,0,0};
     int size;
     private List<Tweet> tweets;
 
@@ -33,12 +32,14 @@ public class Corpus {
             size += file.length();
             for(int i=0; i<content.size(); i++) {
                 String[] s = content.get(i).split("\t");
-                //public Tweet(String gold, String date, long id, String username, String lang, String name, String text){
-                //System.out.println(s.length);
                 Tweet t = null;
                 if(s.length>8) {
+                    //Tweet(String gold, String date, long id, String username, String lang, String name, String text)
                     t = new Tweet(s[0], s[2], new Long(s[3]), s[5], s[6], s[7], s[8]);
-                    tweets.add(t);
+                    //if(!t.getGold_emotion().equals("happy"))
+                        tweets.add(t);
+                    emotions_no[this.getIndex(t.getGold_emotion())]++;
+                    //System.out.println(t.getTokens().toString());
                 }
             }
         }

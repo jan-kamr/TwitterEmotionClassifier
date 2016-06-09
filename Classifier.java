@@ -1,6 +1,3 @@
-import java.util.HashMap;
-import java.util.Iterator;
-
 /**
  * Created by elnaz on 25.04.16.
  */
@@ -23,19 +20,26 @@ public class Classifier {
         for (int i = 0 ; i < max_iter; i++){
             System.out.println("-----------------------------------ITERATION NO#" + (i+1) + "------------------------------------------");
             for (Tweet t:corpus.getTweets()) {
-                System.out.println(t.getGold_emotion() + " " + t.getPredicted_emotion());
-                String predictedLabel = mcp.getBestLabel(t);
-                //                                                                                                                                                                                                                          System.out.println(t.getGold_emotion() + " " + predictedLabel);
-                t.setPredicted_emotion(predictedLabel);
+                //add features to perceptron of gold emotion
+                for (String s: t.getTokens()){
+                    if(mcp.perceptrons[corpus.getIndex(t.getGold_emotion())].feature_weights.get(s) == null)
+                        mcp.perceptrons[corpus.getIndex(t.getGold_emotion())].feature_weights.put(s, (double) 0.0);
+                    else {
+                        mcp.perceptrons[corpus.getIndex(t.getGold_emotion())].feature_weights.put(s, (double) mcp.perceptrons[corpus.getIndex(t.getGold_emotion())].feature_weights.get(s) + (double) 1.0/Corpus.emotions_no[Corpus.getIndex(t.getGold_emotion())]);
+                    }
+                }
+
+                //apply classification for the tweet
                 String goldLabel = t.getGold_emotion();
-                //System.out.println(predictedLabel + " " + goldLabel);
+                String predictedLabel = mcp.getBestLabel(t);
+                t.setPredicted_emotion(predictedLabel);
+
+                //System.out.println(mcp.perceptrons[0].toString());
                 if(!predictedLabel.equals(t.getGold_emotion())){
                     mcp.getPerceptronForLabel(predictedLabel).subtract_weight(t);
                     mcp.getPerceptronForLabel(goldLabel).add_weight(t);
                 }
             }
-            //corpus.evaluate();
-            break;
         }
     }
 
@@ -44,7 +48,7 @@ public class Classifier {
         for (Tweet t:testcorpus.getTweets()) {
             String predictedLabel = mcp.getBestLabel(t);
             t.setPredicted_emotion(predictedLabel);
-            //System.out.println(predictedLabel + " " + t.getGold_emotion());
+           // System.out.println(t.getGold_emotion() + " " + t.getPredicted_emotion());
         }
         testcorpus.evaluate();
     }

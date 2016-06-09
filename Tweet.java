@@ -1,8 +1,5 @@
-import java.lang.String;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by elnaz on 18.04.16.
@@ -31,6 +28,7 @@ public class Tweet {
         setTweet_id(id);
         setGold_emotion(gold);
         //setPredicted_emotion("sad");
+        setTokens(this.featureExtraction());
     }
 
     public Tweet(String gold, String date, long id, String username, String lang, String name, String text){
