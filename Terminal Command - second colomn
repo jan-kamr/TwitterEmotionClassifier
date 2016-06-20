@@ -35,3 +35,4 @@ Removing negational terms:
 
 sed -i "s/not//Ig; s/none//Ig; s/no one//Ig; s/nobody//Ig; s/nothing//Ig; s/neither//Ig; s/nowhere//Ig; s/never//Ig; s/doesn't//Ig; s/isn't//Ig; s/wasn't//Ig; s/shouldn't//Ig; s/wouldn't//Ig; s/couldn't//Ig; s/won't//Ig; s/can't//Ig; s/don't//Ig; s/no//Ig" *.csv
 
+sed -i "s/[a-zA-Z]*n't//Ig" *.csv
