@@ -7,16 +7,17 @@ public class Classifier {
     MultiClassPerceptron mcp;
 
     public Classifier() {
-        max_iter = 10;
+        max_iter = 50;
         mcp = new MultiClassPerceptron();
     }
-
-    public Classifier(Corpus corpus) {
+    //public Classifier(Corpus corpus) {
+    public Classifier(Corpus_negationLess corpus) {
         this();
         train(corpus);
     }
 
-    public void train(Corpus corpus){
+    //public void train(Corpus corpus){
+    public void train(Corpus_negationLess corpus){
         for (int i = 0 ; i < max_iter; i++){
             System.out.println("-----------------------------------ITERATION NO#" + (i+1) + "------------------------------------------");
             for (Tweet t:corpus.getTweets()) {
@@ -25,7 +26,7 @@ public class Classifier {
                     if(mcp.perceptrons[corpus.getIndex(t.getGold_emotion())].feature_weights.get(s) == null)
                         mcp.perceptrons[corpus.getIndex(t.getGold_emotion())].feature_weights.put(s, (double) 0.0);
                     else {
-                        mcp.perceptrons[corpus.getIndex(t.getGold_emotion())].feature_weights.put(s, (double) mcp.perceptrons[corpus.getIndex(t.getGold_emotion())].feature_weights.get(s) + (double) 1.0/Corpus.emotions_no[Corpus.getIndex(t.getGold_emotion())]);
+                        mcp.perceptrons[corpus.getIndex(t.getGold_emotion())].feature_weights.put(s, (double) mcp.perceptrons[corpus.getIndex(t.getGold_emotion())].feature_weights.get(s) + (double) 1.0/corpus.emotions_no[corpus.getIndex(t.getGold_emotion())]);
                     }
                 }
 
@@ -43,7 +44,8 @@ public class Classifier {
         }
     }
 
-    public void classify(Corpus testcorpus){
+    //public void classify(Corpus testcorpus){
+    public void classify(Corpus_negationLess testcorpus){
         System.out.println("-----------------------------------TEST DATA------------------------------------------");
         for (Tweet t:testcorpus.getTweets()) {
             String predictedLabel = mcp.getBestLabel(t);

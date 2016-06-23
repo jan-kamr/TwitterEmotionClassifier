@@ -1,10 +1,12 @@
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Linear classifier - binary Perceptron
  * Created by elnaz on 02.05.16.
  */
-public class Perceptron {
+//public class Perceptron {
+public class Perceptron implements Serializable {
 
     int threshold = 0;
     HashMap<String, Double> feature_weights;

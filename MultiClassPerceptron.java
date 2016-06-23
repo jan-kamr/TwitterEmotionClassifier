@@ -1,7 +1,10 @@
+import java.io.Serializable;
+
 /**
  * Created by elnaz on 09.05.16.
  */
-public class MultiClassPerceptron {
+//public class MultiClassPerceptron {
+public class MultiClassPerceptron implements Serializable {
 
     Perceptron[] perceptrons;
 
@@ -17,7 +20,8 @@ public class MultiClassPerceptron {
         int index = -1;
         for(int i  = 0 ; i < Corpus.no_of_emotions(); i++){
             double sum = perceptrons[i].sum_weights(t);
-            if(sum>max) {//Double.compare(sum , max)>0
+            //if(sum>max) {//Double.compare(sum , max)>0
+            if(Double.compare(sum , max)>0){
                 max = sum;
                 index  = i;
             }

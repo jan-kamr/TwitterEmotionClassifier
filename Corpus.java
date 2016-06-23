@@ -11,6 +11,8 @@ import java.util.List;
 public class Corpus {
 
     public static String[] emotions = {"happy", "sad","surprise","anger","fear","disgust"};
+    /**public static String[] negationalTerms = {"no", "not", "none", "no one", "nobody", "nothing", "neither", "nowhere",
+                    "never", "doesn't", "isn't", "wasn't", "shouldn't", "wouldn't", "couldn't", "won't", "can't", "don't", "n't"};**/
     public static int[] emotions_no = {0,0,0,0,0,0};
     int size;
     private List<Tweet> tweets;
@@ -32,14 +34,28 @@ public class Corpus {
             size += file.length();
             for(int i=0; i<content.size(); i++) {
                 String[] s = content.get(i).split("\t");
+                if(!s[6].equals("en")) continue;
                 Tweet t = null;
                 if(s.length>8) {
-                    //Tweet(String gold, String date, long id, String username, String lang, String name, String text)
-                    t = new Tweet(s[0], s[2], new Long(s[3]), s[5], s[6], s[7], s[8]);
-                    //if(!t.getGold_emotion().equals("happy"))
-                        tweets.add(t);
-                    emotions_no[this.getIndex(t.getGold_emotion())]++;
-                    //System.out.println(t.getTokens().toString());
+                    //for (int j = 0; j < negationalTerms.length; j++) {
+                    //if (s[8].toLowerCase().contains(negationalTerms[j].toLowerCase())) {
+                    //if (s[8].toLowerCase().contains(negationalTerms[j].toLowerCase())&&!s[8].toLowerCase().contains("con't".toLowerCase())) {
+                            //System.out.println(s[8]);
+                            //Tweet(String gold, String HASHTAG REMOVED, String date, long id, SOMETHING REMOVED, String username, String lang, String name, String text)
+                            t = new Tweet(s[0], s[2], new Long(s[3]), s[5], s[6], s[7], s[8]);
+                            //System.out.println("USERNAME: " + s[5]);
+                            /**System.out.println("WHAT: " + s[7]);
+                             try {
+                             Thread.sleep(500);
+                             } catch (InterruptedException e) {
+                             e.printStackTrace();
+                             }**/
+                            //if(!t.getGold_emotion().equals("happy"))
+                            tweets.add(t);
+                            emotions_no[this.getIndex(t.getGold_emotion())]++;
+                            //System.out.println(t.getTokens().toString());
+
+
                 }
             }
         }
